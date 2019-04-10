@@ -13,7 +13,7 @@ import (
 // 获取结构体标签的值
 
 type Monster struct {
-	Name 	string		`json:"name"`
+	Name 	string		`json:"xiaomei"`
 	Age 	int
 	Skill	string
 	Heigth	float64
@@ -24,10 +24,10 @@ type Monster struct {
 }
 
 func SizeOf()  {
-	var p []int
+	//var p []int
 	// int string bool
-	fmt.Println(reflect.TypeOf(unsafe.Sizeof(p)))
-	fmt.Println(unsafe.Sizeof(p))
+	//fmt.Println(reflect.TypeOf(unsafe.Sizeof(p)))
+	//fmt.Println(unsafe.Sizeof(p))
 	var s uintptr
 	fmt.Println(unsafe.Sizeof(s))
 }
@@ -60,13 +60,23 @@ func SizeOf()  {
 func getMonsterFieldInfo(s interface{})  {
 	monsterType := reflect.TypeOf(s)
 	fmt.Printf("monsterType.Field(0) is %v\n", monsterType.Field(5))
-	fmt.Printf("monsterType.FieldByIndex([]int{0}) is %v\n", monsterType.FieldByIndex([]int{0}))
+
+	fmt.Printf("monsterType.FieldByIndex([]int{0,1}) is %v\n", monsterType.FieldByIndex([]int{1}))
+
 	s1, _ := monsterType.FieldByName("Name")
 	fmt.Printf("monsterType.FieldByName(\"Name\") is %v\n", s1)
+	/*
+		type slice struct {
+			array unsafe.Pointer
+			len   int
+			cap   int
+		}
+		切片底层结构
+	*/
 }
 
 // 结构体方法
-func (s Monster) GetSum(n1, n2 int)int {
+func (s Monster) GetSum(n1, n2 int) int {
 	return n1 + n2
 }
 
@@ -91,11 +101,14 @@ func GetStructMethodInfo(s interface{}) {
 //
 func TestStruct(a interface{}) {
 	// 获取类型
-	typ := reflect.TypeOf(a)
+	typ := reflect.TypeOf(a)	// typ : main.Monster
+	fmt.Printf("typ : %v\n", typ)
 	// 获取值
 	val := reflect.ValueOf(a)
+	fmt.Printf("val : %v\n", val)
 	// 获取类别
-	kind := val.Kind()
+	kind := val.Kind()	// kind : struct
+	fmt.Printf("kind : %v\n", kind)
 
 	if kind != reflect.Struct {
 		fmt.Println("expect struct")
@@ -112,7 +125,7 @@ func TestStruct(a interface{}) {
 		// 检测是否有标签
 		tagVal := typ.Field(i).Tag.Get("json")
 		if tagVal != "" {
-			fmt.Printf("Field %d: tag is %v\n", i, tagVal)
+			fmt.Printf("\tField %d: tag is %v\n", i, tagVal)
 		}
 	}
 }
@@ -124,6 +137,7 @@ func TestStruct(a interface{}) {
 // monsterType.Field(0) is {Test  int  88 [7] false}
 func main() {
 	SizeOf()
+	fmt.Println("-----------------------------")
 	monster := Monster{
 		Name: "黄毛精",
 		Age: 200,
@@ -134,9 +148,9 @@ func main() {
 			"ergou":"girl",
 		},
 	}
-	getMonsterFieldInfo(monster)
-	fmt.Println("-------------------------------------")
-	GetStructMethodInfo(monster)
-	fmt.Println("-------------------------------------")
+	//getMonsterFieldInfo(monster)
+	//fmt.Println("-------------------------------------")
+	//GetStructMethodInfo(monster)
+	//fmt.Println("-------------------------------------")
 	TestStruct(monster)
 }
