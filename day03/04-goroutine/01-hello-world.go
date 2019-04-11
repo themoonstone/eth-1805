@@ -7,14 +7,14 @@ import (
 )
 
 // goroutine
-func main_sleep() {
+func main() {
 
 	// 抛出一个goroutine
 	go func() {
 		fmt.Println("hello world")
 	}()
 
-	time.Sleep(1 * time.Second)
+	time.Sleep(1 * time.Nanosecond)
 	// 主goroutine退出，会直接杀掉其它的goroutine
 }
 
@@ -31,7 +31,7 @@ func main_mutex() {
 }
 
 // channel使用
-func main() {
+func main_channel() {
 	done := make(chan string)
 	go func() {
 		fmt.Println("hello world")
