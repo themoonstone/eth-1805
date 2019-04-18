@@ -35,6 +35,10 @@ func (ia *intArray) Set(index int, elem int) (err error)  {
 	if err = ia.checkIndex(index); err != nil {
 		return
 	}
+	//
+	if err = ia.checkValue(); err != nil {
+		return
+	}
 	// COW(copy-on-write)写时复制算法
 	// 竞态条件
 	newArray := make([]int, ia.length)
@@ -43,7 +47,7 @@ func (ia *intArray) Set(index int, elem int) (err error)  {
 	ia.val.Store(newArray)
 	return
 }
-
+// 获取数据
 func (ia *intArray) Get(index int) (elem int, err error) {
 	if err = ia.checkIndex(index); err != nil {
 		return
@@ -53,7 +57,7 @@ func (ia *intArray) Get(index int) (elem int, err error) {
 	}
 
 	elem = ia.val.Load().([]int)[index]
-	return 0, nil
+	return
 }
 
 func (ia *intArray) Len() int {
