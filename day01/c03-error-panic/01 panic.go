@@ -44,13 +44,15 @@ func main()  {
 	// 银行
 	type Bank struct {
 		nameS *NameStruct
+		s interface{}
 	}
 
 	b := Bank{}
 	// 通过new对结构体进行内存分配
-	//b.nameS = new(NameStruct)
+
 	fmt.Printf("before %p\n", b.nameS)
-	b.nameS = &NameStruct{}
+	b.nameS = new(NameStruct)
+
 	fmt.Printf("after %p\n", b.nameS)
 	b.nameS.Age = 100
 }
