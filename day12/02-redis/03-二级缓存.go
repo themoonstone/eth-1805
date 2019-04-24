@@ -51,9 +51,9 @@ func getData(input_name string) []Person {
 	// 获取数据
 	// 判断redis
 	strs := getInfoFromRedis(input_name)
-	fmt.Printf("strs : %v, length : %v\n",strs[0], len(strs))
-
-	if len(strs) == 0 {
+	// TODO 为空的时候获取缓存的问题
+	if len(strs) ==1 && strs[0] == "" {
+		fmt.Println("nil")
 		// redis中不存在相关的数据
 		// 从mysql中获取
 		fmt.Println("从mysql中获取...")
