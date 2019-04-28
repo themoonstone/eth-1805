@@ -1,0 +1,56 @@
+err:init0 [{main.init 06 第三方异常处理.go 10}]
+err:init1 [{main.init.0 06 第三方异常处理.go 16}]
+err:init2 [{main.init.1 06 第三方异常处理.go 20}]
+err:main3 [{main.main 06 第三方异常处理.go 24}]
+err:main4 [{main.main.func 06 第三方异常处理.go 26} {main.main 06 第三方异常处理.go 27}]
+err:main5 -> {err:init1} [{main.main 06 第三方异常处理.go 28}]
+err:main6 -> {err:main5 -> {err:init1}} [{main.main 06 第三方异常处理.go 29}]
+err7: wraped(0): err:main6 -> {err:main5 -> {err:init1}}
+err7: wraped(1): err:main5 -> {err:init1}
+err7: wraped(2): err:init1
+err7: {
+	"Code": 0,
+	"Error": "err:main7 -> {err:main6 -> {err:main5 -> {err:init1}}}",
+	"Caller": [
+		{
+			"FuncName": "main.main",
+			"FileName": "06 第三方异常处理.go",
+			"FileLine": 30
+		}
+	],
+	"Wraped": [
+		{
+			"Code": 0,
+			"Error": "err:main6 -> {err:main5 -> {err:init1}}",
+			"Caller": [
+				{
+					"FuncName": "main.main",
+					"FileName": "06 第三方异常处理.go",
+					"FileLine": 29
+				}
+			]
+		},
+		{
+			"Code": 0,
+			"Error": "err:main5 -> {err:init1}",
+			"Caller": [
+				{
+					"FuncName": "main.main",
+					"FileName": "06 第三方异常处理.go",
+					"FileLine": 28
+				}
+			]
+		},
+		{
+			"Code": 0,
+			"Error": "err:init1",
+			"Caller": [
+				{
+					"FuncName": "main.init.0",
+					"FileName": "06 第三方异常处理.go",
+					"FileLine": 16
+				}
+			]
+		}
+	]
+}
