@@ -15,3 +15,10 @@ type ParseResult struct {
 func NilParser([]byte) ParseResult {
 	return ParseResult{}
 }
+
+// 有效数据结构封装
+type Item struct {
+	Type	string
+	Index	string
+	Data	interface{}
+}

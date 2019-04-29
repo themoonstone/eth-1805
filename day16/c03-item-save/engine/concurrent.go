@@ -3,7 +3,6 @@ package engine
 
 // 并发抓取逻辑
 import (
-	"fmt"
 	"1805/day16/c03-item-save/model"
 )
 
@@ -34,17 +33,15 @@ func (e *ConcurrentEngine)Run(seeds ...Request)  {
 		// 提交请求
 		e.Scheduler.Submit(r)
 	}
-	var itemAccount int = 0
 	// 接收out传递过来的结果
 	for {
 		result := <- out
 		// 打印item
 		for _, item := range result.Items {
-			itemAccount++
-			fmt.Printf("id:%#d, item : %s\n",itemAccount,item)
 			if _, ok := item.(model.Profile); ok {
 				// 传输有效数据Item
 				go func(item interface{}) {
+					// 将item传入e.ItemChannel(对应ItemServer()-->out)
 					e.ItemChannel <- item
 				}(item)
 			}
